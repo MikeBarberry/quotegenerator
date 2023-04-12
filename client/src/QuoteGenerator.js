@@ -1,21 +1,14 @@
-import { apiURL } from "../utils/index.js";
-
-import Show from "./Show.js";
+import Show from './Show.js';
+import { apiURL } from '../utils/index.js';
 
 export default class QuoteGenerator {
-  constructor() {
-    const loading = document.getElementById("loading");
-    loading.toggleAttribute("hidden");
-
-    fetch(`${apiURL}/`)
-      .then((res) => res.json())
-      .then((shows) => {
-        loading.toggleAttribute("hidden");
-
-        shows.map((show) => {
-          const newShow = new Show(show);
-          newShow.buildQuotes(show.quotes);
-        });
-      });
+  async init() {
+    const response = await fetch(`${apiURL}/`);
+    const json = await response.json();
+    document.getElementById('loading').toggleAttribute('hidden');
+    for (const element of json) {
+      const show = new Show(element);
+      show.buildQuotes(element.quotes);
+    }
   }
 }

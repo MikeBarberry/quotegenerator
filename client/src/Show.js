@@ -1,28 +1,22 @@
-import { apiURL } from "../utils/index.js";
-
-import Quote from "./Quote.js";
+import Quote from './Quote.js';
+import { apiURL } from '../utils/index.js';
 
 export default class Show {
   constructor(show) {
-    this.quoteList = this.createShow(show);
+    this.container = this.createShow(show);
   }
 
   createShow(show) {
-    const boundShowAddSuccess = this.showAddSuccess.bind(this);
+    const boundAddMessage = this.addMessage.bind(this);
 
-    const container = document.getElementById("post-container");
-    const addButton = document.createElement("button");
-    const name = document.createElement("h2");
-    const ul = document.createElement("ul");
-    const post = document.createElement("div");
-
-    addButton.innerText = "Add";
-    addButton.setAttribute("class", "addButton");
-    addButton.addEventListener("click", function () {
+    const button = document.createElement('button');
+    button.innerText = 'Add';
+    button.setAttribute('class', 'addButton');
+    button.addEventListener('click', function () {
       fetch(`${apiURL}/add`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           id: show.id,
@@ -30,55 +24,50 @@ export default class Show {
       })
         .then((resp) => resp.json())
         .then((confirmation) => {
-          boundShowAddSuccess(confirmation.message);
+          boundAddMessage(confirmation.message);
         });
     });
 
-    name.innerText = show.name;
+    const h2 = document.createElement('h2');
+    h2.innerText = show.name;
 
-    ul.setAttribute("class", "quoteList");
-    ul.setAttribute("id", `quote-list-${show.id}`);
+    const ul = document.createElement('ul');
+    ul.setAttribute('class', 'quoteList');
+    ul.setAttribute('id', `quote-list-${show.id}`);
 
-    post.setAttribute("class", "post");
-    post.setAttribute("id", show.id);
-    post.append(addButton, name, ul);
-    container.append(post);
+    const div = document.createElement('div');
+    div.setAttribute('class', 'post');
+    div.setAttribute('id', show.id);
+    div.append(button, h2, ul);
+
+    document.getElementById('post-container').append(div);
 
     return ul;
   }
 
   buildQuotes(quotes) {
-    quotes.forEach((quote) => {
-      const newQuote = new Quote(this);
-      newQuote.createQuote(quote, this.quoteList);
-    });
+    for (const element of quotes) {
+      const quote = new Quote(this);
+      quote.createQuote(element, this.container);
+    }
   }
 
-  showAddSuccess(confirmation) {
-    const showMessage = document.getElementById("add-success");
-    showMessage.innerText = confirmation.note;
+  addMessage(confirmation) {
+    document.getElementById('add-success').innerText = confirmation.note;
     setTimeout(() => {
-      showMessage.innerText = "";
+      document.getElementById('add-success').innerText = '';
     }, 1500);
 
-    const showQuotes = document.getElementById(
-      `quote-list-${confirmation.quote.show_id}`
-    );
-    const newQuote = new Quote(this);
-    newQuote.createQuote(confirmation.quote, showQuotes);
+    const quote = new Quote(this);
+    quote.createQuote(confirmation.quote, this.container);
   }
 
-  showDeleteSuccess(confirmation) {
-    const showMessage = document.getElementById("delete-success");
-    showMessage.innerText = confirmation.note;
+  deleteMessage(confirmation) {
+    document.getElementById('delete-success').innerText = confirmation.note;
     setTimeout(() => {
-      showMessage.innerText = "";
+      document.getElementById('delete-success').innerText = '';
     }, 1500);
 
-    const showQuotes = document.getElementById(
-      `quote-list-${confirmation.quote.show_id}`
-    );
-    const quote = document.getElementById(confirmation.quote.id);
-    showQuotes.removeChild(quote);
+    this.container.removeChild(document.getElementById(confirmation.quote.id));
   }
 }

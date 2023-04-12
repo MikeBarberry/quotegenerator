@@ -1,3 +1,4 @@
-import QuoteGenerator from "./QuoteGenerator.js";
+import QuoteGenerator from './QuoteGenerator.js';
 
-const QG = new QuoteGenerator();
+const program = new QuoteGenerator();
+program.init();

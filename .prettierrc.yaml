@@ -1,0 +1,14 @@
+singleQuote: true
+spaces: 2
+semi: true
+bracketSpacing: true
+bracketSameLine: false
+arrowParens: always
+endOfLine: lf
+embeddedLanguageFormatting: auto
+singleAttributePerLine: false
+jsxSingleQuote: true
+overrides:
+  - files: '/server/addQuote.js'
+    options:
+      singleQuote: false
