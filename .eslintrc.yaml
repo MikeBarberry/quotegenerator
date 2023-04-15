@@ -7,4 +7,4 @@ env:
 parserOptions:
   sourceType: module
 rules:
-  no-unsed-vars: false
+  no-unsed-vars: 0

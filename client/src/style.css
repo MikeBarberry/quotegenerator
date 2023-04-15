@@ -30,19 +30,8 @@ button:hover {
   cursor: pointer;
 }
 
-#loading span {
-  animation-name: blink;
-  animation-duration: 1.4s;
-  animation-iteration-count: infinite;
-  animation-fill-mode: both;
-}
-
-#loading span:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-#loading span:nth-child(3) {
-  animation-delay: 0.4s;
+.message {
+  font-family: 'Space Mono', monospace;
 }
 
 .darkMode {
@@ -63,7 +52,65 @@ button:hover {
   padding: 2rem;
 }
 
-#image-wrapper {
+.addButton {
+  background-color: mediumseagreen;
+  border-radius: 5px;
+  font-family: 'Gloria Hallelujah', cursive;
+}
+
+.deleteButton {
+  background-color: lightcoral;
+  margin-left: 1rem;
+  border-radius: 5px;
+  float: right;
+  font-family: 'Gloria Hallelujah', cursive;
+}
+
+.post {
+  display: inline-grid;
+  margin: 1rem;
+  border: 2rem;
+  border-color: black;
+  box-shadow: 3px 4px 3px 4px black;
+  padding: 2rem;
+  max-width: 25rem;
+  font-family: 'Gloria Hallelujah', cursive;
+}
+
+#brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#header {
+  color: darkslateblue;
+  font-family: 'Space Mono', monospace;
+}
+
+#loading span {
+  animation-name: blink;
+  animation-duration: 1.4s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+#loading span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+#loading span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+#messages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#image {
   text-align: center;
 }
 
@@ -77,37 +124,18 @@ button:hover {
   font-weight: bolder;
 }
 
-.addButton {
-  background-color: mediumseagreen;
-  border-radius: 5px;
-  font-family: "Gloria Hallelujah", cursive;
-}
-
-.deleteButton {
-  background-color: lightcoral;
-  margin-left: 1rem;
-  border-radius: 5px;
-  float: right;
-  font-family: "Gloria Hallelujah", cursive;
-}
-
-.post {
-  display: inline-grid;
-  margin: 1rem;
-  border: 2rem;
-  border-color: black;
-  box-shadow: 3px 4px 3px 4px black;
-  padding: 2rem;
-  max-width: 25rem;
-  font-family: "Gloria Hallelujah", cursive;
-}
-
 #toogle-dark-mode {
   border-radius: 10px;
   background-color: rgb(48, 48, 48);
   color: white;
   position: relative;
   right: 5rem;
+  margin-bottom: 30px;
+  left: 15px;
+}
+
+#loading {
+  font-family: 'Gloria Hallelujah', cursive;
 }
 
 #post-container {

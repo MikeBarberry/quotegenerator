@@ -22,46 +22,46 @@
     />
     <title>Quote Generator</title>
   </head>
-  <body id="body">
-    <div id="container">
-      <div
-        style="
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-        "
-      >
-        <h1
-          id="title"
-          style="color: darkslateblue; font-family: 'Space Mono', monospace"
-        >
-          TV Show Quotes
-        </h1>
-        <button id="toogle-dark-mode" style="margin-bottom: 30px; left: 15px">
-          <i id="moon" class="fa fa-moon-o"></i>
-        </button>
-      </div>
-
-      <div id="image-wrapper">
-        <img
-          id="background_image"
-          src="/public/movie.jpeg"
-          alt="restaurant_image"
-        />
-      </div>
-
-      <div style="display: flex; justify-content: center; align-items: center">
-        <p id="delete-success" style="font-family: 'Space Mono', monospace"></p>
-        <p id="add-success" style="font-family: 'Space Mono', monospace"></p>
-        <p id="loading" style="font-family: 'Gloria Hallelujah', cursive">
-          Connecting to server<span>.</span><span>.</span><span>.</span>
-        </p>
-      </div>
-
-      <div id="post-container"></div>
+  <body>
+    <div id="brand">
+      <h1 id="header">TV Show Quotes</h1>
+      <button id="toogle-dark-mode">
+        <i id="moon" class="fa fa-moon-o"></i>
+      </button>
     </div>
-    <script src="/src/index.js" type="module"></script>
-    <script src="/src/darkmode.js" defer></script>
+    <div id="image">
+      <img
+        id="background_image"
+        src="/public/movie.jpeg"
+        alt="restaurant_image"
+      />
+    </div>
+    <div id="messages">
+      <p class="message" id="delete-success"></p>
+      <p class="message" id="add-success"></p>
+      <p id="loading">
+        Connecting to server<span>.</span><span>.</span><span>.</span>
+      </p>
+    </div>
+    <div id="post-container"></div>
+    <script type="module">
+      import { default as QuoteGenerator } from '/src/QuoteGenerator.js';
+      import { default as ThemeMode } from '/src/ThemeMode.js';
+
+      const program = new QuoteGenerator();
+      program.init();
+
+      const mode = new ThemeMode();
+      mode.init();
+
+      if (localStorage.getItem('mode') === 'dark') {
+        const intervalId = setInterval(() => {
+          if (program.loaded) {
+            mode.button.click();
+            clearInterval(intervalId);
+          }
+        }, 1);
+      }
+    </script>
   </body>
 </html>
