@@ -2,6 +2,7 @@ export default class ThemeMode {
   constructor() {
     this.mode = 'light';
     this.button = document.getElementById('toogle-dark-mode');
+    this.init();
   }
 
   init() {

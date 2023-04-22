@@ -3,7 +3,7 @@ import { apiURL } from '../utils/index.js';
 
 export default class Show {
   constructor(show) {
-    this.container = this.createShow(show);
+    this.node = this.createShow(show);
   }
 
   createShow(show) {
@@ -45,21 +45,14 @@ export default class Show {
     return ul;
   }
 
-  buildQuotes(quotes) {
-    for (const element of quotes) {
-      const quote = new Quote(this);
-      quote.createQuote(element, this.container);
-    }
-  }
-
   addMessage(confirmation) {
     document.getElementById('add-success').innerText = confirmation.note;
     setTimeout(() => {
       document.getElementById('add-success').innerText = '';
     }, 1500);
 
-    const quote = new Quote(this);
-    quote.createQuote(confirmation.quote, this.container);
+    const quote = confirmation.quote;
+    new Quote(this, quote);
   }
 
   deleteMessage(confirmation) {
@@ -68,6 +61,6 @@ export default class Show {
       document.getElementById('delete-success').innerText = '';
     }, 1500);
 
-    this.container.removeChild(document.getElementById(confirmation.quote.id));
+    this.node.removeChild(document.getElementById(confirmation.quote.id));
   }
 }

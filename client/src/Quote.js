@@ -1,11 +1,12 @@
 import { apiURL } from '../utils/index.js';
 
 export default class Quote {
-  constructor(show) {
+  constructor(show, quote) {
     this.parent = show;
+    this.createQuote(quote, this.parent.node);
   }
 
-  createQuote(quote, ul) {
+  createQuote(quote, parentNode) {
     const boundDeleteMessage = this.parent.deleteMessage.bind(this.parent);
 
     const button = document.createElement('button');
@@ -30,6 +31,6 @@ export default class Quote {
     li.innerText = quote.quote;
     li.append(button);
 
-    ul.append(li);
+    parentNode.append(li);
   }
 }
