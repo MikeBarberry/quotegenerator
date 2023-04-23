@@ -1,5 +1,5 @@
 import { Show, Quote } from './index.js';
-import { apiURL } from '../utils/index.js';
+import { apiURL } from '../utils/constants.js';
 
 export default class QuoteGenerator {
   constructor() {

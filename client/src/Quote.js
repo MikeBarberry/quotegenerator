@@ -1,4 +1,4 @@
-import { apiURL } from '../utils/index.js';
+import { apiURL } from '../utils/constants.js';
 
 export default class Quote {
   constructor(show, quote) {
@@ -23,7 +23,9 @@ export default class Quote {
         }),
       })
         .then((resp) => resp.json())
-        .then((confirmation) => boundDeleteMessage(confirmation.message));
+        .then((json) =>
+          boundDeleteMessage(json.message.note, json.message.quote.id)
+        );
     });
 
     const li = document.createElement('li');

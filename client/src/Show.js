@@ -1,8 +1,10 @@
 import Quote from './Quote.js';
-import { apiURL } from '../utils/index.js';
+import { apiURL } from '../utils/constants.js';
 
 export default class Show {
   constructor(show) {
+    this.id = show.id;
+    this.name = show.name;
     this.node = this.createShow(show);
   }
 
@@ -23,8 +25,8 @@ export default class Show {
         }),
       })
         .then((resp) => resp.json())
-        .then((confirmation) => {
-          boundAddMessage(confirmation.message);
+        .then((json) => {
+          boundAddMessage(json.message.note, json.message.quote);
         });
     });
 
@@ -45,22 +47,21 @@ export default class Show {
     return ul;
   }
 
-  addMessage(confirmation) {
-    document.getElementById('add-success').innerText = confirmation.note;
+  addMessage(message, quote) {
+    document.getElementById('add-success').innerText = message;
     setTimeout(() => {
       document.getElementById('add-success').innerText = '';
     }, 1500);
 
-    const quote = confirmation.quote;
     new Quote(this, quote);
   }
 
-  deleteMessage(confirmation) {
-    document.getElementById('delete-success').innerText = confirmation.note;
+  deleteMessage(message, id) {
+    document.getElementById('delete-success').innerText = message;
     setTimeout(() => {
       document.getElementById('delete-success').innerText = '';
     }, 1500);
 
-    this.node.removeChild(document.getElementById(confirmation.quote.id));
+    this.node.removeChild(document.getElementById(id));
   }
 }
