@@ -9,3 +9,9 @@ export function checkIfLastQuote(show) {
     lastQuote.removeChild(lastQuote.children[0]);
   }
 }
+
+export function createElement(type, options) {
+  const element = document.createElement(type);
+  Object.assign(element, options);
+  return element;
+}

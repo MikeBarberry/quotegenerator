@@ -1,67 +1,74 @@
 import Quote from './Quote.js';
 import { apiURL } from '../utils/constants.js';
+import { createElement } from '../utils/index.js';
 
 export default class Show {
   constructor(show) {
-    this.id = show.id;
-    this.name = show.name;
-    this.node = this.createShow(show);
+    const { id, name } = show;
+    this.id = id;
+    this.name = name;
+    this.createContainerElements();
   }
 
-  createShow(show) {
-    const boundAddMessage = this.addMessage.bind(this);
+  createContainerElements() {
+    const containerDiv = createElement('div', {
+      className: 'post',
+      id: this.id,
+    });
+    const quotesList = createElement('ul', {
+      className: 'quoteList',
+      id: 'quote-list'.concat(this.id),
+    });
+    this.containerDiv = containerDiv;
+    this.quotesList = quotesList;
+  }
 
-    const button = document.createElement('button');
-    button.innerText = 'Add';
-    button.setAttribute('class', 'addButton');
-    button.addEventListener('click', function () {
-      fetch(`${apiURL}/add`, {
+  buildShowUI(root) {
+    const handleAddQuote = async () => {
+      const res = await fetch(apiURL.concat('/add'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          id: show.id,
+          id: this.id,
         }),
-      })
-        .then((resp) => resp.json())
-        .then((json) => {
-          boundAddMessage(json.message.note, json.message.quote);
-        });
+      });
+      const json = await res.json();
+      const { note: message, quote: content } = json.message;
+      this.addQuoteResponseMessage(message, content);
+    };
+
+    const addQuoteButton = createElement('button', {
+      onclick: handleAddQuote,
+      className: 'addButton',
+      innerText: 'Add',
     });
 
-    const h2 = document.createElement('h2');
-    h2.innerText = show.name;
+    const showNameHeader = createElement('h2', {
+      innerText: this.name,
+    });
 
-    const ul = document.createElement('ul');
-    ul.setAttribute('class', 'quoteList');
-    ul.setAttribute('id', `quote-list-${show.id}`);
-
-    const div = document.createElement('div');
-    div.setAttribute('class', 'post');
-    div.setAttribute('id', show.id);
-    div.append(button, h2, ul);
-
-    document.getElementById('post-container').append(div);
-
-    return ul;
+    this.containerDiv.append(addQuoteButton, showNameHeader, this.quotesList);
+    root.append(this.containerDiv);
   }
 
-  addMessage(message, quote) {
+  addQuoteResponseMessage(message, content) {
     document.getElementById('add-success').innerText = message;
     setTimeout(() => {
       document.getElementById('add-success').innerText = '';
     }, 1500);
 
-    new Quote(this, quote);
+    const quote = new Quote(this);
+    quote.createQuoteUI(content);
   }
 
-  deleteMessage(message, id) {
+  deleteQuoteMessage(message, id) {
     document.getElementById('delete-success').innerText = message;
     setTimeout(() => {
       document.getElementById('delete-success').innerText = '';
     }, 1500);
 
-    this.node.removeChild(document.getElementById(id));
+    this.quotesList.removeChild(document.getElementById(id));
   }
 }
