@@ -1,6 +1,6 @@
 import Quote from './Quote.js';
 import { lambdaURL } from '../utils/constants.js';
-import { createElement } from '../utils/index.js';
+import { createElement, toggleMessage } from '../utils/index.js';
 
 export default class Show {
   constructor(id, name) {
@@ -53,21 +53,13 @@ export default class Show {
   }
 
   handleAddQuote(message, { id, content }) {
-    document.getElementById('add-success').innerText = message;
-    setTimeout(() => {
-      document.getElementById('add-success').innerText = '';
-    }, 1500);
-
+    toggleMessage('add-success', message, 1500);
     const quote = new Quote(this);
     quote.buildQuoteUI(id, content);
   }
 
   handleDeleteQuote(message, id) {
-    document.getElementById('delete-success').innerText = message;
-    setTimeout(() => {
-      document.getElementById('delete-success').innerText = '';
-    }, 1500);
-
+    toggleMessage('delete-success', message, 1500);
     this.quotesList.removeChild(document.getElementById(id));
   }
 }

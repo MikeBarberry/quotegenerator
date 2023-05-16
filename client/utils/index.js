@@ -15,3 +15,10 @@ export function createElement(type, options) {
   Object.assign(element, options);
   return element;
 }
+
+export function toggleMessage(elementId, message, timeout) {
+  document.getElementById(elementId).innerText = message;
+  setTimeout(() => {
+    document.getElementById(elementId).innerText = '';
+  }, timeout);
+}
