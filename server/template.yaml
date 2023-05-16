@@ -1,0 +1,66 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'QuoteGen Back End'
+
+Globals:
+  Function:
+    Timeout: 15
+    MemorySize: 128
+
+Parameters:
+  ImageRepo:
+    Type: String
+  MongoURI:
+    Type: String
+  BuildID:
+    Type: String
+
+Resources:
+  QuoteGenAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: QuoteGen-Proxy-Plus
+      Description: 'QuoteGen Back End'
+      StageName: main
+      EndpointConfiguration: REGIONAL
+      BinaryMediaTypes:
+        - '*'
+
+  QuoteGenBackendLambda:
+    Type: AWS::Serverless::Function
+    Metadata:
+      DockerTag: nodejs18.x-v1
+      DockerContext: .
+      Dockerfile: Dockerfile
+    Properties:
+      FunctionName: QuoteGen-Proxy-Plus
+      Environment:
+        Variables:
+          NODE_ENV: production
+          MONGO_URI:
+            Ref: MongoURI
+      PackageType: Image
+      Architectures:
+        - x86_64
+      ImageUri:
+        Fn::Sub: ${ImageRepo}:${BuildID}
+      Events:
+        Root:
+          Type: Api
+          Properties:
+            RestApiId:
+              Ref: QuoteGenAPI
+            Path: /
+            Method: ANY
+        ProxyPlus:
+          Type: Api
+          Properties:
+            RestApiId:
+              Ref: QuoteGenAPI
+            Path: /{proxy+}
+            Method: ANY
+
+Outputs:
+  QuoteGenBackend:
+    Description: 'Success'
+    Value: 'Find the auto-generated URL on the console or CLI'

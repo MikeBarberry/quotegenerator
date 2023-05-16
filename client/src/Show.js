@@ -1,10 +1,9 @@
 import Quote from './Quote.js';
-import { apiURL } from '../utils/constants.js';
+import { lambdaURL } from '../utils/constants.js';
 import { createElement } from '../utils/index.js';
 
 export default class Show {
-  constructor(show) {
-    const { id, name } = show;
+  constructor(id, name) {
     this.id = id;
     this.name = name;
     this.createContainerElements();
@@ -25,7 +24,7 @@ export default class Show {
 
   buildShowUI(root) {
     const handleAddQuote = async () => {
-      const res = await fetch(apiURL.concat('/add'), {
+      const res = await fetch(lambdaURL.concat('/add'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,8 +34,8 @@ export default class Show {
         }),
       });
       const json = await res.json();
-      const { note: message, quote: content } = json.message;
-      this.addQuoteResponseMessage(message, content);
+      const { message, inserted } = json;
+      this.handleAddQuote(message, inserted);
     };
 
     const addQuoteButton = createElement('button', {
@@ -53,17 +52,17 @@ export default class Show {
     root.append(this.containerDiv);
   }
 
-  addQuoteResponseMessage(message, content) {
+  handleAddQuote(message, { id, content }) {
     document.getElementById('add-success').innerText = message;
     setTimeout(() => {
       document.getElementById('add-success').innerText = '';
     }, 1500);
 
     const quote = new Quote(this);
-    quote.createQuoteUI(content);
+    quote.createQuoteUI(id, content);
   }
 
-  deleteQuoteMessage(message, id) {
+  handleDeleteQuote(message, id) {
     document.getElementById('delete-success').innerText = message;
     setTimeout(() => {
       document.getElementById('delete-success').innerText = '';

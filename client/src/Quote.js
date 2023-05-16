@@ -1,4 +1,4 @@
-import { apiURL } from '../utils/constants.js';
+import { lambdaURL } from '../utils/constants.js';
 import { createElement } from '../utils/index.js';
 
 export default class Quote {
@@ -6,22 +6,23 @@ export default class Quote {
     this.parentShow = parentShow;
   }
 
-  createQuoteUI(quote) {
+  buildQuoteUI(id, content) {
     const handleDeleteQuote = async () => {
-      const res = await fetch(`${apiURL}/delete`, {
+      const res = await fetch(lambdaURL.concat('/delete'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          id: quote.id,
+          id: id,
         }),
       });
       const json = await res.json();
-      this.parentShow.deleteQuoteMessage.call(
+      const { message, deleted } = json;
+      this.parentShow.handleDeleteQuote.call(
         this.parentShow,
-        json.message.note,
-        json.message.quote.id
+        message,
+        deleted.id
       );
     };
 
@@ -32,8 +33,8 @@ export default class Quote {
     });
 
     const quoteContent = createElement('li', {
-      id: quote.id,
-      innerText: quote.quote,
+      id: id,
+      innerText: content,
     });
 
     quoteContent.append(deleteQuoteButton);

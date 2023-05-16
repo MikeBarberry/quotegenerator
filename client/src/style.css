@@ -138,7 +138,7 @@ button:hover {
   font-family: 'Gloria Hallelujah', cursive;
 }
 
-#post-container {
+#shows-container {
   display: flex;
   flex-flow: row wrap;
   flex-direction: row;

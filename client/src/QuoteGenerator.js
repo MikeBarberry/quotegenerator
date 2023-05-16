@@ -1,26 +1,26 @@
 import { Show, Quote } from './index.js';
-import { apiURL } from '../utils/constants.js';
+import { lambdaURL } from '../utils/constants.js';
 
 export default class QuoteGenerator {
   constructor() {
     this.loaded = false;
+    this.showsContainer = document.getElementById('shows-container');
   }
 
   async init() {
-    const response = await fetch(apiURL.concat('/'));
+    const response = await fetch(lambdaURL.concat('/'));
     const json = await response.json();
 
     this.loaded = true;
-
     document.getElementById('loading').toggleAttribute('hidden');
 
-    for (const element of json) {
-      const show = new Show(element);
-      show.buildShowUI(document.getElementById('post-container'));
+    for (const { showId, name, showQuotes } of json) {
+      const show = new Show(showId, name);
+      show.buildShowUI(this.showsContainer);
 
-      for (let idx = 0; idx < element.quotes.length; idx++) {
+      for (const { id, content } of showQuotes) {
         const quote = new Quote(show);
-        quote.createQuoteUI(element.quotes[idx]);
+        quote.buildQuoteUI(id, content);
       }
     }
   }

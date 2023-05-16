@@ -1,2 +1,2 @@
-export const apiURL =
-  'https://efoksp21r7.execute-api.us-west-2.amazonaws.com/main/api';
+export const lambdaURL =
+  'https://iej9qq1vqd.execute-api.us-west-2.amazonaws.com/main';

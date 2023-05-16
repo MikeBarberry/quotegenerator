@@ -1,23 +1,8 @@
-.DS_Store
-server/.gitignore
-server/.gitattributes
-server/.git
-server/gemfile.lock
+node_modules/
+*.aws-sam
+*.DS_Store
+*samconfig.toml
+*/utils/mongo.mjs
+*.vscode
 
-server/.bundle
-server/log/*
-server/tmp/*
-server/log/.keep
-server/tmp/.keep
-/server/tmp/pids/*
-server/tmp/pids/
-server/tmp/pids/.keep
-server/storage/*
-server/storage/.keep
-server/.byebug_history
-server/config/master.key
-server/.DS_Store
 
-client/.vscode
-
-node_modules
