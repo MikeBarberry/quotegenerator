@@ -37,6 +37,8 @@ export default class Quote {
       innerText: content,
     });
 
+    console.log(quoteContent);
+
     quoteContent.append(deleteQuoteButton);
     this.parentShow.quotesList.append(quoteContent);
   }

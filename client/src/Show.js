@@ -59,7 +59,7 @@ export default class Show {
     }, 1500);
 
     const quote = new Quote(this);
-    quote.createQuoteUI(id, content);
+    quote.buildQuoteUI(id, content);
   }
 
   handleDeleteQuote(message, id) {
