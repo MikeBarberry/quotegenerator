@@ -1,3 +1,5 @@
+import { createElement } from '../utils/index.js';
+
 export default class ThemeMode {
   constructor() {
     this.mode = 'light';
@@ -21,12 +23,19 @@ export default class ThemeMode {
   changeMode({ newMode, shadowColor, iconClass, iconColor }) {
     document.querySelector('body').classList.toggle('darkMode');
 
-    const newIcon = document.createElement('i');
-    newIcon.className = iconClass;
+    Object.assign(this.button, {
+      style: {
+        color: iconColor,
+        background: shadowColor,
+      },
+    });
 
-    this.button.replaceChild(newIcon, document.querySelector('i'));
-    this.button.style.background = shadowColor;
-    this.button.style.color = iconColor;
+    this.button.replaceChild(
+      createElement('i', {
+        className: iconClass,
+      }),
+      document.querySelector('i')
+    );
 
     document
       .querySelectorAll('.post')
