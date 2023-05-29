@@ -3,7 +3,7 @@ import { lambdaURL } from '../utils/constants.js';
 
 export default class QuoteGenerator {
   constructor() {
-    this.loaded = false;
+    this.loading = true;
     this.showsContainer = document.getElementById('shows-container');
   }
 
@@ -11,7 +11,7 @@ export default class QuoteGenerator {
     const response = await fetch(lambdaURL.concat('/'));
     const json = await response.json();
 
-    this.loaded = true;
+    this.loading = false;
     document.getElementById('loading').toggleAttribute('hidden');
 
     for (const { showId, name, showQuotes } of json) {

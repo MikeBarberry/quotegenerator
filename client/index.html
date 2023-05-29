@@ -24,7 +24,7 @@
   </head>
   <body>
     <div id="brand">
-      <h1 id="header">TV Show Quotes</h1>
+      <h1 id="header">Quote Generator</h1>
       <button id="toogle-dark-mode">
         <i id="moon" class="fa fa-moon-o"></i>
       </button>
@@ -55,7 +55,7 @@
 
       if (localStorage.getItem('mode') === 'dark') {
         const intervalId = setInterval(() => {
-          if (program.loaded) {
+          if (!program.loading) {
             mode.button.click();
             clearInterval(intervalId);
           }
