@@ -12,7 +12,7 @@
   },
   "keywords": [],
   "author": "Mike Barberry",
-  "license": "ISC",
+  "license": "GPL-3.0",
   "homepage": "https://github.com/MikeBarberry/quote-generator#readme",
   "dependencies": {
     "eslint": "^8.32.0"
