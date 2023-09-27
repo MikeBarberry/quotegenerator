@@ -1,0 +1,8 @@
+{
+  "name": "quote-generator-frontend",
+  "version": "3.0",
+  "author": "Mike Barberry",
+  "license": "GPL-3.0",
+  "main": "src/index.js",
+  "type": "module"
+}

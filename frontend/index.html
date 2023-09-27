@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Set favicon. -->
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="images/favicon.ico" />
+    <!-- Import dark reader. -->
+    <script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.58/darkreader.min.js"></script>
+    <!-- Import icons. -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <!-- Import fonts. -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap" />
+    <title>Quote Generator</title>
+  </head>
+  <body style="margin: 0px; display: flex; flex-direction: column">
+    <!-- Header. -->
+    <header
+      style="
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        justify-content: center;
+        align-items: center;
+        min-height: 50px;
+      ">
+      <h1
+        style="
+          font-family: Space Mono;
+          color: darkslateblue;
+          margin: 20px 0px 0px;
+        ">
+        Quote Generator
+      </h1>
+      <button
+        id="modebutton"
+        title="change mode"
+        data-mode="light"
+        style="
+          border-radius: 30px;
+          cursor: pointer;
+          background-color: black;
+          color: white;
+        ">
+        <i class="fa fa-moon-o"></i>
+      </button>
+      <img
+        src="images/movie.jpeg"
+        alt="Movie theatre green screen viewed from the back row." />
+      <p
+        style="height: 30px"
+        id="messageContainer"></p>
+    </header>
+    <!-- Main. Holds dynamic content. -->
+    <main
+      id="root"
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        height: 100%;
+        font-family: Gloria Hallelujah;
+        padding: 0px 60px 60px;
+        min-height: 500px;
+      ">
+      <!-- Show spinner before content loads. -->
+
+      <div
+        id="loading"
+        style="
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+        ">
+        <p
+          style="
+            font-family: Gloria Hallelujah;
+            font-weight: bolder;
+            font-size: 24px;
+          ">
+          Connecting to server.
+        </p>
+        <div class="fa-4x">
+          <i class="fa fa-spinner fa-pulse"></i>
+        </div>
+      </div>
+    </main>
+    <!-- Footer. -->
+    <footer
+      style="
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        height: 200px;
+        justify-content: center;
+        align-items: center;
+        background-color: darkslateblue;
+        color: white;
+      ">
+      <p>Built and maintained with</p>
+      <i
+        class="fa fa-heart"
+        aria-hidden="true"></i>
+      <p>by</p>
+      <a
+        style="text-decoration: none; color: white"
+        href="https://github.com/mikebarberry"
+        title="my github"
+        target="_blank"
+        >Mike Barberry</a
+      >
+    </footer>
+    <!-- Load custom script. -->
+    <script
+      src="src/index.js"
+      type="module"></script>
+  </body>
+</html>
